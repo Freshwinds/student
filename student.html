@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>学生成绩单系统</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="./bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <style type="text/css">
+        form.form1{
+            padding-left: 60px;
+            padding-right: 600px;
+            text-align: left;
+
+        }
+
+    </style>
+    <script type="text/javascript">
+        addEventListener("DOMContentLoaded",function () {
+            document.getElementById('form1').addEventListener('submit',function (event) {
+                event.preventDefault();
+                get_re();
+                return false;
+
+            })
+
+        });
+        function del(obj)
+        {
+            var tr=obj.parentNode.parentNode;//得到按钮[obj]的父元素[td]的父元素[tr]
+            tr.parentNode.removeChild(tr);//从tr的父元素[tbody]移除tr
+            //var str = obj.cell
+            localStorage.removeItem(str);
+            var t=document.getElementById("table").childNodes;
+            for(var i=0;i<t.rows.length;i++){
+                if(t.rowIndex(i).cellIndex(0)==str){
+                    t.deleteRow(i);
+                }
+        }
+
+
+        }
+        function chec(this) {
+            var str = obj.cells[0].childNodes[0].value;
+            localStorage.removeItem(str);
+            var t=document.getElementById("table").childNodes.item(0);
+            for(var i=0;i<t.childNodes.length;i++){
+                if(t.childNodes(i).childNodes[0].innerText==str){
+                    t.deleteRow(i);
+                }
+
+                var stu= new Object;
+
+                stu.id= document.getElementById("id").value;
+                stu.name = document.getElementById("name").value;
+                stu.nation = document.getElementById("nation").value;
+                stu.classes = document.getElementById("class").value;
+                stu.chinese_core = document.getElementById("Chinese").value;
+                stu.math_core = document.getElementById("Math").value;
+                stu. English_core = document.getElementById("English").value;
+                var str = JSON.stringify(stu); // 将对象转换为字符串
+                localStorage.setItem(stu.id,str);
+
+
+                var str = localStorage.getItem(stu.id);
+                var stu = JSON.parse(str); //将字符串转换为JSON对象
+                var tablex=document.getElementById('table');
+                var x=tablex.insertRow(tablex.rows.length);
+                var y1=x.insertCell(0);
+                var y2=x.insertCell(1);
+                var y3=x.insertCell(2);
+                var y4=x.insertCell(3);
+                var y5=x.insertCell(4);
+                var y6=x.insertCell(5);
+                var y7=x.insertCell(6);
+
+                y1.innerHTML=stu.id;
+                y2.innerHTML=stu.name;
+                y3.innerHTML=stu.nation;
+                y4.innerHTML=stu.class;
+                y5.innerHTML=stu.chinese_core;
+                y6.innerHTML=stu.math_core;
+                y7.innerHTML=stu.English_core;
+
+
+
+        }
+
+        function  save() {
+
+            var stu= new Object;
+            stu.id= document.getElementById("id").value;
+            stu.name = document.getElementById("name").value;
+            stu.nation = document.getElementById("nation").value;
+            stu.classes = document.getElementById("class").value;
+            stu.chinese_core = document.getElementById("Chinese").value;
+            stu.math_core = document.getElementById("Math").value;
+            stu. English_core = document.getElementById("English").value;
+            var str = JSON.stringify(stu); // 将对象转换为字符串
+            localStorage.setItem(stu.id,str);
+
+
+            var str = localStorage.getItem(stu.id);
+            var stu = JSON.parse(str); //将字符串转换为JSON对象
+            var tablex=document.getElementById('table');
+            var x=tablex.insertRow(tablex.rows.length);
+            var y1=x.insertCell(0);
+            var y2=x.insertCell(1);
+            var y3=x.insertCell(2);
+            var y4=x.insertCell(3);
+            var y5=x.insertCell(4);
+            var y6=x.insertCell(5);
+            var y7=x.insertCell(6);
+
+            y1.innerHTML=stu.id;
+            y2.innerHTML=stu.name;
+            y3.innerHTML=stu.nation;
+            y4.innerHTML=stu.class;
+            y5.innerHTML=stu.chinese_core;
+            y6.innerHTML=stu.math_core;
+            y7.innerHTML=stu.English_core;
+        }
+
+        function get_re(){
+            var falg = 1;
+
+            var id = document.getElementById("id").value;
+
+            if (!/\d+/.test(id)) {
+                falg = 0;
+
+            }
+            var name = document.getElementById("name").value;
+            if (!/\D+/.test(name)) {
+                falg = 0;
+            }
+            var nation = document.getElementById("nation").value;
+            if (!/\D+/.test(nation)) {
+                falg = 0;
+            }
+            var classes = document.getElementById("class").value;
+            if (!/\d+/.test(classes)) {
+                falg = 0;
+            }
+            var chinese_core = document.getElementById("Chinese").value;
+            if (!/\d+/.test(chinese_core)) {
+                falg = 0;
+            }
+            var math_core = document.getElementById("Math").value;
+            if (!/\d+/.test(math_core)) {
+                falg = 0;
+            }
+            var English_core = document.getElementById("English").value;
+            if (!/\d+/.test(English_core)) {
+                falg = 0;
+            }
+            if(falg==0){
+                alert("请输入正确格式");
+
+            }
+            else{
+                save();
+
+            }
+        }
+        function find(){
+            var stu_str = document.getElementById("search_stu").value;
+            var stu_array=stu_str.split(",");
+            for(var i=0;i<stu_array.length;i++) {
+                if (/![\d+]/.test(stu_array[i])) {
+                    alert("请输入正确格式");
+                    return;
+                }
+            }
+            var list = document.getElementById("list");
+            var result = "<table border='1'>";
+            result += " <tr> <td>学号</td> <td>姓名</td> <td>民族</td> <td>班级</td> <td>语文</td> <td>数学</td> <td>英语</td> </tr>";
+            for(var i=0;i<stu_array.length;i++) {
+                        var str = localStorage.getItem(stu_array[i]);
+                        var site = JSON.parse(str);
+                       result +=  "<><td>"+site.id+"</td><td>"+site.name+"</td><td>"+site.nation+"</td><td>"+site.classes+"</td><td>"+site.chinese_core+"</td><td>"+site.math_core+"</td><td>"+site.English_core+"</td><td>";
+                       result+= `<input type="button" onclick="del(this)"  id="button" value="删除"/></td><td>`;
+                       result+=`<input type="button" onclick="chec(this)"  id="button" value="修改"/></td><tr>`;
+                    }
+                    result += "</table>";
+                    list.innerHTML = result;
+
+
+        }
+
+
+
+
+    </script>
+</head>
+<body>
+
+    <table class="table" border="1"  id="table">
+        <tr> <td>学号</td> <td>姓名</td> <td>民族</td> <td>班级</td> <td>语文</td> <td>数学</td> <td>英语</td> </tr>
+    </table>
+
+
+    <form  class="form1" id="form1">
+    <div class="form-group">
+        <label for="id">学号</label>
+        <input type="number" class="form-control" id="id" placeholder="number"/>
+    </div>
+    <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" class="form-control" id="name" placeholder="text"/>
+    </div>
+    <div class="form-group">
+        <label for="nation">民族</label>
+        <input type="text" class="form-control" id="nation" placeholder="text"/>
+    </div>
+    <div class="form-group">
+        <label for="class">班级</label>
+        <input type="number" class="form-control" id="class" placeholder="number"/>
+    </div>
+    <div class="form-group">
+    <label for="Chinese">语文</label>
+    <input type="number" class="form-control" id="Chinese" placeholder="number"/>
+    </div>
+    <div class="form-group">
+    <label for="Math">数学</label>
+    <input type="number" class="form-control" id="Math" placeholder="number"/>
+    </div>
+    <div class="form-group">
+    <label for="English">英语</label>
+    <input type="number" class="form-control" id="English" placeholder="number"/>
+    </div>
+    <input type="submit"  value="Submit"/>
+
+
+    </form>
+    <hr/>
+    <label for="search_stu">输入学号：</label>
+    <input type="text" id="search_stu" name="English"/>
+    <input type="button" onclick="find()" value="查找学生"/>
+    <p id="find_result"><br/></p>
+    <br/>
+    <div id="list">
+    </div>
+
+</body>
+</html>
